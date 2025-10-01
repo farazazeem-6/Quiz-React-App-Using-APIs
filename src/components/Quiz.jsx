@@ -21,17 +21,23 @@ function Quiz() {
   }, [difficulty]);
 
   useEffect(() => {
-    if (que.length > 0) {
+    if (que && que.length > 0 && que[currInd]) {
       const currentQue = que[currInd];
-      const shuffled = [
-        ...currentQue.incorrect_answers,
-        currentQue.correct_answer,
-      ].sort(() => Math.random() - 0.5);
-      setShuffleOptions(shuffled);
+      if (currentQue.incorrect_answers && currentQue.correct_answer) {
+        const shuffled = [
+          ...currentQue.incorrect_answers,
+          currentQue.correct_answer,
+        ].sort(() => Math.random() - 0.5);
+        setShuffleOptions(shuffled);
+      }
     }
   }, [currInd, que]);
 
-  if (que.length === 0) return <h1 className="loading">Loading.....</h1>;
+  
+  if (!que || que.length === 0 || shuffleOptions.length === 0) {
+    return <h1 className="loading">Loading.....</h1>;
+  }
+
   const currentQue = que[currInd];
 
   function nextQue() {
@@ -80,7 +86,7 @@ function Quiz() {
                 type="radio"
                 id={`action-${index}`}
               />
-              <label htmlFor={`action-${index}`}>{opt}</label>
+              <label htmlFor={`action-${index}`}>{decodeHTML(opt)}</label>
             </div>
           ))}
         </div>
