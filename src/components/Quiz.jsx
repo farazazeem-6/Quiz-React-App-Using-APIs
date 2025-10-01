@@ -73,7 +73,6 @@ function Quiz() {
   const correctCount = userAnswers.filter((ans) => ans.isCorrect).length;
   const totalQuestions = que.length;
 
-  
   // Modal
 
   if (showResults) {
