@@ -121,3 +121,139 @@
   color: white;
   margin-top: 10px;
 }
+
+/* Modal css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-title {
+  text-align: center;
+  color: #19444a;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+}
+
+.score-summary {
+  text-align: center;
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  background-color: #4caf50;
+}
+
+.score-summary h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.result-item {
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  transition: transform 0.2s;
+}
+
+.result-item.correct {
+  border-color: #ccc;
+  background: #ebfcf2;
+}
+
+.result-item.wrong {
+  border-color: #ccc;
+  background: rgb(247, 212, 212);
+}
+
+.result-item h3 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.question-text {
+  font-weight: 100;
+  margin-bottom: 15px;
+  color: #34495e;
+  font-size: 1.1rem;
+}
+
+.answer-details p {
+  margin: 8px 0;
+  font-size: 1rem;
+}
+
+.correct-text {
+  color: #4caf50;
+  font-weight: 100;
+}
+
+.wrong-text {
+  color: #f44336;
+  font-weight: 100;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.modal-buttons .button {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 100;
+}
+
+.modalhome {
+  background: var(--brown);
+  padding: 15px 40px;
+  border-radius: 40px;
+  border: 2px solid #333;
+  font-size: 18px;
+  cursor: pointer;
+}
+.retry {
+  background: #19444a;
+  padding: 15px 40px;
+  border-radius: 40px;
+  border: 2px solid #333;
+  font-size: 18px;
+  cursor: pointer;
+  color: white;
+}

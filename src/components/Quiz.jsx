@@ -8,6 +8,8 @@ function Quiz() {
   const [currInd, setCurrInd] = useState(0);
   const [selectOpt, setSelectOpt] = useState("");
   const [shuffleOptions, setShuffleOptions] = useState([]);
+  const [userAnswers, setUserAnswers] = useState([]);
+  const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -33,7 +35,6 @@ function Quiz() {
     }
   }, [currInd, que]);
 
-  
   if (!que || que.length === 0 || shuffleOptions.length === 0) {
     return <h1 className="loading">Loading.....</h1>;
   }
@@ -46,18 +47,20 @@ function Quiz() {
       return;
     }
 
-    if (selectOpt === currentQue.correct_answer) {
-      alert("Correct!");
-    } else {
-      alert(`Wrong! Answer is ${currentQue.correct_answer}`);
-    }
+    const answerData = {
+      question: currentQue.question,
+      userAnswer: selectOpt,
+      correctAnswer: currentQue.correct_answer,
+      isCorrect: selectOpt === currentQue.correct_answer,
+    };
+
+    setUserAnswers((prev) => [...prev, answerData]);
 
     if (currInd < que.length - 1) {
       setCurrInd((prev) => prev + 1);
       setSelectOpt("");
     } else {
-      alert("Quiz Completed");
-      navigate("/");
+      setShowResults(true);
     }
   }
 
@@ -65,6 +68,70 @@ function Quiz() {
     const txt = document.createElement("textarea");
     txt.innerHTML = para;
     return txt.value;
+  }
+
+  const correctCount = userAnswers.filter((ans) => ans.isCorrect).length;
+  const totalQuestions = que.length;
+
+  
+  // Modal
+
+  if (showResults) {
+    return (
+      <div className="modal-overlay">
+        <div className="modal-content">
+          <h1 className="modal-title"> Quiz Result</h1>
+          <div className="score-summary">
+            <h2>
+              Your Score: {correctCount} / {totalQuestions}
+            </h2>
+          </div>
+
+          <div className="results-list">
+            {userAnswers.map((answer, index) => (
+              <div
+                key={index}
+                className={`result-item ${
+                  answer.isCorrect ? "correct" : "wrong"
+                }`}
+              >
+                <h3>Question {index + 1}</h3>
+                <p className="question-text">{decodeHTML(answer.question)}</p>
+                <div className="answer-details">
+                  <p>
+                    <strong>Your Answer:</strong>{" "}
+                    <span
+                      className={
+                        answer.isCorrect ? "correct-text" : "wrong-text"
+                      }
+                    >
+                      {decodeHTML(answer.userAnswer)}
+                    </span>
+                  </p>
+                  {!answer.isCorrect && (
+                    <p>
+                      <strong>Correct Answer:</strong>{" "}
+                      <span className="correct-text">
+                        {decodeHTML(answer.correctAnswer)}
+                      </span>
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="modal-buttons">
+            <button onClick={() => navigate("/")} className="modalhome">
+              Go Home
+            </button>
+            <button onClick={() => window.location.reload()} className="retry">
+              Retry Quiz
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
