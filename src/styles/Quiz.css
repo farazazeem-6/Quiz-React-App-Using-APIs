@@ -81,7 +81,7 @@
 }
 .question {
   font-size: 22px;
-  color: #333;
+  color: #ffc679;
   font-weight: 100;
 }
 .choices {
@@ -90,20 +90,34 @@
   margin-top: 40px;
   gap: 20px;
 }
-.opt {
-  display: flex;
-  gap: 10px;
-}
+
 .opt label {
   font-weight: 100;
-  color: #333;
+  color: #76e4ad;
   font-size: 16px;
 }
-.opt input{
+.opt input {
   width: 50px;
 }
-.loading{
+.loading {
   font-size: 3rem;
   color: white;
   text-align: center;
+}
+.next-btn {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.next {
+  padding: 7px 20px;
+  background-color: #6feeff;
+  color: white;
+}
+.home {
+  padding: 10px 20px;
+  background-color: #19444a;
+  color: white;
+  margin-top: 10px;
 }

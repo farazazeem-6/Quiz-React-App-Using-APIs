@@ -7,6 +7,7 @@ function Quiz() {
   const [que, setQue] = useState([]);
   const [currInd, setCurrInd] = useState(0);
   const [selectOpt, setSelectOpt] = useState("");
+  const [shuffleOptions, setShuffleOptions] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -19,14 +20,19 @@ function Quiz() {
     fetchData();
   }, [difficulty]);
 
+  useEffect(() => {
+    if (que.length > 0) {
+      const currentQue = que[currInd];
+      const shuffled = [
+        ...currentQue.incorrect_answers,
+        currentQue.correct_answer,
+      ].sort(() => Math.random() - 0.5);
+      setShuffleOptions(shuffled);
+    }
+  }, [currInd, que]);
+
   if (que.length === 0) return <h1 className="loading">Loading.....</h1>;
-
   const currentQue = que[currInd];
-
-  const options = [
-    ...currentQue.incorrect_answers,
-    currentQue.correct_answer,
-  ].sort(() => Math.random() - 0.5);
 
   function nextQue() {
     if (!selectOpt) {
@@ -35,7 +41,7 @@ function Quiz() {
     }
 
     if (selectOpt === currentQue.correct_answer) {
-      alert("Corrent!");
+      alert("Correct!");
     } else {
       alert(`Wrong! Answer is ${currentQue.correct_answer}`);
     }
@@ -64,7 +70,7 @@ function Quiz() {
           </p>
         </div>
         <div className="choices">
-          {options.map((opt, index) => (
+          {shuffleOptions.map((opt, index) => (
             <div className="opt" key={index}>
               <input
                 name="ans"
@@ -78,7 +84,15 @@ function Quiz() {
             </div>
           ))}
         </div>
+        <div className="next-btn">
+          <button onClick={() => nextQue()} className="button next">
+            Submit
+          </button>
+        </div>
       </div>
+      <button onClick={() => navigate("/")} className="button home">
+        Home
+      </button>
     </div>
   );
 }
